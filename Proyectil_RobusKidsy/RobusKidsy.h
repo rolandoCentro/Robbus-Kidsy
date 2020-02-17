@@ -4,12 +4,7 @@
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
 #include <Wire.h>
-#include "Adafruit_TCS34725.h"
-
-/*
-void endTimer();
-void onTimer();
-void startTimer();*/
+#include "TCS34725.h"
 
 // -------------------------------------------------------------------------------------------------------------
 // Robus Classes
@@ -66,7 +61,7 @@ public:
     void off();
     bool toggle();
       
-  } Led1, Led2, Led3, Led4, LedW;
+  } Led1, Led2, Led3, Led4;
 
   class Arrows {    
   private:
@@ -195,6 +190,8 @@ public:
     byte gammatable[256];
     uint16_t clear, red, green, blue;
     uint8_t read();
+    void enable();
+    void disable();
     
   } ColorSensor;
 
