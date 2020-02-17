@@ -497,6 +497,14 @@ uint8_t Robus :: ColorSensor :: read() {
   return(color_value);
 }
 
+void enable() {
+    tcs.enable();
+}
+
+void disable() {
+    tcs.disable();
+}
+
 void ColorConverter :: RgbToHsv(uint8_t red, uint8_t green, uint8_t blue, double& hue, double& saturation, double& value) {
   auto rd = static_cast<double>(red) / 255;
   auto gd = static_cast<double>(green) / 255;
