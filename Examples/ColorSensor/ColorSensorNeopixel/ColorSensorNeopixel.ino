@@ -8,8 +8,9 @@ bool buzzer_state = false;  // Activa o desactiva el buzzer
 int new_color, old_color;   // identifica si el color ha cambiado
 
 void setup() {
-  Serial.begin(115200);     // Inicializa comunicacion serial a 115200 baudios
-  Kidsy.begin();            // Inicializa el hardware del Robus Kidsy
+  Serial.begin(115200);       // Inicializa comunicacion serial a 115200 baudios
+  Kidsy.begin();              // Inicializa el hardware del Robus Kidsy
+  Kidsy.ColorSensor.enable(); // Habilita el sensor de color y el LED blanco
 }
 
 void loop() {
@@ -36,18 +37,29 @@ void loop() {
   new_color = Kidsy.ColorSensor.color_value;    // el color leido es aproximado a los primarios o secundarios (RGBCMY)
 
   if(Kidsy.ButtonA.read() == PRESSED) buzzer_state = !buzzer_state;   // El boton A activa o desactiva el Buzzer
-  if(Kidsy.ButtonB.read() == PRESSED) Kidsy.LedW.toggle();            // El boton B prende o apaga el LED blanco
   
   if(new_color != old_color) {                              // si el color cambio ...
     Kidsy.Neopixel.color(Kidsy.ColorSensor.color_value);    // ... muestra el color en el neopixel
     if(buzzer_state == true) {                              // si el buzzer esta habilitado ...
       switch(Kidsy.ColorSensor.color_value) {               // ... evalua que color se leyo
-        case RED:     Kidsy.Buzzer.playTone(100); break;    // playTone(N); reproduce un sonido de frecuencia = N indefinidamente
-        case GREEN:   Kidsy.Buzzer.playTone(200); break;    // playTone(N, time); repruduce durante cierto tiempo una frecuencia = N
-        case BLUE:    Kidsy.Buzzer.playTone(300); break;    // ejemplo: Kidsy.Buzzer.playTone(300, 50); 300Hz, durante 50ms
-        case YELLOW:  Kidsy.Buzzer.playTone(400); break;
-        case CYAN:    Kidsy.Buzzer.playTone(500); break;
-        case MAGENTA: Kidsy.Buzzer.playTone(600); break;
+        case RED:     
+          Kidsy.Buzzer.playTone(100); 
+          break;    // playTone(N); reproduce un sonido de frecuencia = N indefinidamente
+        case GREEN:   
+          Kidsy.Buzzer.playTone(200); 
+          break;    // playTone(N, time); repruduce durante cierto tiempo una frecuencia = N
+        case BLUE:    
+          Kidsy.Buzzer.playTone(300); 
+          break;    // ejemplo: Kidsy.Buzzer.playTone(300, 50); 300Hz, durante 50ms
+        case YELLOW:  
+          Kidsy.Buzzer.playTone(400); 
+          break;
+        case CYAN:    
+          Kidsy.Buzzer.playTone(500); 
+          break;
+        case MAGENTA: 
+          Kidsy.Buzzer.playTone(600); 
+          break;
       }
     }
     else Kidsy.Buzzer.noTone();   // noTone detiene la reproduccion indefinida de playTone(N);

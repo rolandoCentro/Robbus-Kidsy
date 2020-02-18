@@ -80,21 +80,29 @@ void loop() {
   if(Kidsy.ArrowUp.digital == TOUCHED) {
     setSpeedLeft = MAX_SPEED;
     setSpeedRight = MAX_SPEED;
+    Kidsy.Neopixel.color(RED);
+    Kidsy.Buzzer.playTone(400,50);
   }
 
   if(Kidsy.ArrowDown.digital == TOUCHED) {
     setSpeedLeft = -MAX_SPEED;
     setSpeedRight = -MAX_SPEED;
+    Kidsy.Neopixel.color(GREEN);
+    Kidsy.Buzzer.playTone(500,50);
   }
 
   if(Kidsy.ArrowLeft.digital == TOUCHED) {
     setSpeedLeft = -MAX_SPEED;
     setSpeedRight = MAX_SPEED;
+    Kidsy.Neopixel.color(BLUE);
+    Kidsy.Buzzer.playTone(600,50);
   }
 
   if(Kidsy.ArrowRight.digital == TOUCHED) {
     setSpeedLeft = MAX_SPEED;
     setSpeedRight = -MAX_SPEED;
+    Kidsy.Neopixel.color(MAGENTA);
+    Kidsy.Buzzer.playTone(500,50);
   }
   
   // REVISION DEL BOTON A
@@ -102,6 +110,7 @@ void loop() {
   if(Kidsy.ButtonA.status == PRESSED) {
     setSpeedLeft = 0;
     setSpeedRight = 0;
+    Kidsy.Neopixel.color(BLACK);
   }
   else if(Kidsy.ButtonA.status == RELEASED) {
     
