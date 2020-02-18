@@ -128,13 +128,11 @@ typedef enum {
  *  @brief  Class that stores state and functions for interacting with
  *          TCS34725 Color Sensor
  */
-class Adafruit_TCS34725 {
+class TCS34725 {
 public:
-  Adafruit_TCS34725(tcs34725IntegrationTime_t = TCS34725_INTEGRATIONTIME_2_4MS,
+  TCS34725(tcs34725IntegrationTime_t = TCS34725_INTEGRATIONTIME_2_4MS,
                     tcs34725Gain_t = TCS34725_GAIN_1X);
 
-  boolean begin(uint8_t addr, TwoWire *theWire);
-  boolean begin(uint8_t addr);
   boolean begin();
   boolean init();
 

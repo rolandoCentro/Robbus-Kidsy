@@ -10,8 +10,7 @@ void setup() {
   Kidsy.begin();          // Inicializa el hardware del Robus Kidsy
 }
 
-unsigned int speedRight = 0;      // guarda la velocidad del motor derecho
-unsigned int speedLeft = 0;       // guarda la velocidad del motor izquierdo
+int speed = 0;            // guarda la velocidad de los motores
 
 // banderas - Son variables booleanas que guardan estados verdaderos o falsos
 bool flag_firstHold_A = false;    // primera vez que se mantiene el boton A
@@ -31,8 +30,8 @@ void loop() {
   Kidsy.ButtonB.read();   // captura estado nuevo del boton B
 
   // REVISION DEL BOTON A
-  // ----------------------
-  if(Kidsy.ButtonA.status == PRESSED) speedRight += 5;  // si se presiona el boton A, la velocidad aumenta en 5
+  // --------------------------------------------------------------------------------------------------------------------
+  if(Kidsy.ButtonA.status == PRESSED) speed -= 1;  // si se presiona el boton B, la velocidad aumenta en 1
   // Si el boton se mantiene presionado, y es la primera vez ...
   else if(Kidsy.ButtonA.status == HOLD_PRESSED && flag_firstHold_A == false) {
     flag_firstHold_A = true;    // ... activa bandera de boton presionado
@@ -49,14 +48,14 @@ void loop() {
   }
 
   if(flag_repeat_A == true) {   // si la bandera de repeticion esta activa
-    speedRight += 1;            // hace incrementos rapidos de 1
-    delay(50);
+    speed -= 5;            // hace incrementos rapidos de 5
+    delay(100);
   }
-  // ----------------------
+  // --------------------------------------------------------------------------------------------------------------------
 
   // REVISION DEL BOTON B
-  // ----------------------
-  if(Kidsy.ButtonB.status == PRESSED) speedLeft += 5;  // si se presiona el boton B, la velocidad aumenta en 5
+  // --------------------------------------------------------------------------------------------------------------------
+  if(Kidsy.ButtonB.status == PRESSED) speed += 1;  // si se presiona el boton B, la velocidad aumenta en 1
   // Si el boton se mantiene presionado, y es la primera vez ...
   else if(Kidsy.ButtonB.status == HOLD_PRESSED && flag_firstHold_B == false) {
     flag_firstHold_B = true;    // ... activa bandera de boton presionado
@@ -73,23 +72,18 @@ void loop() {
   }
 
   if(flag_repeat_B == true) {   // si la bandera de repeticion esta activa
-    speedLeft += 1;            // hace incrementos rapidos de 1
-    delay(50);
+    speed += 5;            // hace incrementos rapidos de 5
+    delay(100);
   }
-  // ----------------------
+  // --------------------------------------------------------------------------------------------------------------------
 
-  if(speedRight > 255) speedRight = 0;  // si la velocidad supera los 8 bits (255), regresa a 0
-  if(speedLeft > 255) speedLeft = 0;
+  if(speed > 255) speed = 255;  // si la velocidad supera los 8 bits (255), se mantiene
+  if(speed < -255) speed = -255;
 
   // asigna la velocidad en los motores, si se quiere cambiar el sentido hacia atras, usar BACK
-  Kidsy.Move.MotorLeft(FRONT, speedLeft);    
-  Kidsy.Move.MotorRight(FRONT, speedRight);
+  Kidsy.Move.MotorLeft(speed);    
+  Kidsy.Move.MotorRight(speed);
 
-  Serial.print("speedLeft: ");    // imprime la velocidad de ambos motores
-  Serial.print(speedLeft);
-  Serial.print(", speedRight: ");
-  Serial.println(speedRight);
+  Serial.print("velocidad: ");    // imprime la velocidad de ambos motores
+  Serial.println(speed);
 } 
-
-// Fin del ejemplo uso de motores con botones pulsacion corta y mantenida
-// -------------------------------------------------------------------------------------------------------------------

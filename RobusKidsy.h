@@ -30,10 +30,10 @@ public:
     bool new_state = HIGH;
     bool old_state = HIGH;
   public:
-    #define PRESSED           0
-    #define RELEASED          1
-    #define HOLD_RELEASED     2
-    #define HOLD_PRESSED      3
+    #define PRESSED           2
+    #define RELEASED          3
+    #define HOLD_RELEASED     0
+    #define HOLD_PRESSED      1
     #define BUTTON_A          25
     #define BUTTON_B          26
     uint8_t pin;      
@@ -116,8 +116,8 @@ public:
     uint8_t dcm_in;
     void MotorLeft(int16_t);
     void MotorRight(int16_t);
-    void frontStraight(uint8_t);
-    void backStraight(uint8_t);
+    void straightForward(uint8_t);
+    void straightBackward(uint8_t);
     void pivotLeft(uint8_t);
     void pivotRight(uint8_t);
     void closedLeft(uint8_t);
@@ -126,6 +126,7 @@ public:
     void wideLeftBack(uint8_t, float);
     void wideRightFront(uint8_t, float);
     void wideRightBack(uint8_t, float);
+    void stop();
 
   } Move;
 
@@ -174,7 +175,6 @@ public:
     void fadeInOut(uint8_t, uint16_t, uint16_t, uint16_t);
     void heartBeat(uint8_t);
     void rainbow(uint16_t);
-    void sensorColor();
               
   } Neopixel;
 
@@ -188,7 +188,7 @@ public:
     uint8_t color_value;
     String color_string;
     byte gammatable[256];
-    uint16_t clear, red, green, blue;
+    uint16_t white, red, green, blue;
     uint8_t read();
     void enable();
     void disable();

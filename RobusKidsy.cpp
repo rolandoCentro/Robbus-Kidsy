@@ -4,26 +4,8 @@
 #ifndef _ROBUSKIDSY_CPP_
 #define _ROBUSKIDSY_CPP_
 
-/*hw_timer_t * timer = NULL;
-
-void endTimer() {
-  timerEnd(timer);
-  timer = NULL; 
-}
-
-void onTimer(){
-  
-}
-
-void startTimer() {
-  timer = timerBegin(0, 80, true); // timer_id = 0; divider=80; countUp = true;
-  timerAttachInterrupt(timer, &onTimer, true); // edge = true
-  timerAlarmWrite(timer, 1000000, true);  //1000 ms
-  timerAlarmEnable(timer);
-}*/
-
 Adafruit_NeoPixel dot(1, 19, NEO_GRB + NEO_KHZ800);  // 1 neopixel en pin19
-Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
+TCS34725 tcs = TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
 
 void Robus :: begin() {
 
@@ -62,7 +44,6 @@ void Robus :: begin() {
   Led2.pin = LED2;
   //Led3.pin = LED3;
   //Led4.pin = LED4;
-  LedW.pin = LEDW;
 
   ArrowUp.pin = AN_UP;
   ArrowDown.pin = AN_DOWN;
@@ -78,6 +59,8 @@ void Robus :: begin() {
 
   Neopixel.begin();
   Neopixel.color(OFF);
+
+  tcs.begin();
 
   for (int i=0; i<256; i++) {
     float x = i;
@@ -156,7 +139,7 @@ void Robus :: classMove :: MotorRight(int16_t vel) {
   }
 }
 
-void Robus :: classMove :: frontStraight(uint8_t vel) {
+void Robus :: classMove :: straightForward(uint8_t vel) {
   if(vel > 255) vel = 255;
   else if(vel < 0) vel = 0;
   speed = vel;
@@ -166,10 +149,12 @@ void Robus :: classMove :: frontStraight(uint8_t vel) {
   ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
 }
 
-void Robus :: classMove :: backStraight(uint8_t vel) {
+void Robus :: classMove :: straightBackward(uint8_t vel) {
   if(vel > 255) vel = 255;
-  else if(vel < 0) vel = 0;
-  speed = -vel;
+  else if(vel < -255) vel = -255;
+  
+  if(speed < 0) speed = vel;
+  else speed = -vel;
   ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
   ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 + speed);
   ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
@@ -219,7 +204,6 @@ void Robus :: classMove :: wideLeftFront(uint8_t speed, float factor) {
   ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
   ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - (int)(speed/speed_div));
   ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
-  Serial.println(speed/speed_div);
 }
 
 void Robus :: classMove :: wideLeftBack(uint8_t speed, float factor) {
@@ -237,7 +221,6 @@ void Robus :: classMove :: wideLeftBack(uint8_t speed, float factor) {
   ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
   ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
   ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - (int)(speed/speed_div));
-  Serial.println(speed/speed_div);
 }
 
 void Robus :: classMove :: wideRightFront(uint8_t speed, float factor) {
@@ -255,7 +238,6 @@ void Robus :: classMove :: wideRightFront(uint8_t speed, float factor) {
   ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
   ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
   ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - (int)(speed/speed_div));
-  Serial.println(speed/speed_div);
 }
 
 void Robus :: classMove :: wideRightBack(uint8_t speed, float factor) {
@@ -273,7 +255,13 @@ void Robus :: classMove :: wideRightBack(uint8_t speed, float factor) {
   ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
   ledcWrite(PWM_CHANNEL_LEFT_IN1, 255 - (int)(speed/speed_div));
   ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
-  Serial.println(speed/speed_div);
+}
+
+void Robus :: classMove :: stop() {
+  ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
+  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255);
+  ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
+  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
 }
 
 uint8_t Robus :: Arrows :: readAnalog() {
@@ -441,10 +429,10 @@ void Robus :: Neopixel :: rainbow(uint16_t wait) {
 }
 
 uint8_t Robus :: ColorSensor :: read() {
-  tcs.getRawData(&red, &green, &blue, &clear);
+  tcs.getRawData(&red, &green, &blue, &white);
   
   // Hacer rgb medición relativa
-  sum = clear;
+  sum = white;
   r = red; r /= sum;
   g = green; g /= sum;
   b = blue; b /= sum;
@@ -456,53 +444,55 @@ uint8_t Robus :: ColorSensor :: read() {
   ColorConverter::RgbToHsv(static_cast<uint8_t>(r), static_cast<uint8_t>(g), static_cast<uint8_t>(b), hue, saturation, value);
   hue360 = hue * 360;
 
-  if (hue360 < 30 || hue360 >= 330 && clear > 50 && clear < 700)
+  if (hue360 < 30 || hue360 >= 330 && white > 50 && white < 700)
   {
     color_string = "red";
     color_value = RED;
   }
-  else if (hue360 >= 31 && hue360 < 90 && clear > 50 && clear < 700)
+  else if (hue360 >= 31 && hue360 < 90 && white > 50 && white < 700)
   {
     color_string = "yellow";
     color_value = YELLOW;
   }
-  else if (hue360 >= 91 && hue360 < 150 && clear > 50 && clear < 700)
+  else if (hue360 >= 91 && hue360 < 150 && white > 50 && white < 700)
   {
     color_string = "green";
     color_value = GREEN;
   }
-  else if (hue360 >= 151 && hue360 < 210 && clear > 50 && clear < 700)
+  else if (hue360 >= 151 && hue360 < 210 && white > 50 && white < 700)
   {
     color_string = "cyan";
     color_value = CYAN;
   }
-  else if (hue360 >= 210 && hue360 < 270 && clear > 50 && clear < 700)
+  else if (hue360 >= 210 && hue360 < 270 && white > 50 && white < 700)
   {
     color_string = "blue";
     color_value = BLUE;
   }
-  else if (hue360 >= 270 && hue360 < 330 && clear > 50 && clear < 700)
+  else if (hue360 >= 270 && hue360 < 330 && white > 50 && white < 700)
   {
     color_string = "magenta";
     color_value = MAGENTA;
   }
-  else if(clear <= 50) {
+  else if(white <= 50) {
     color_string = "black";
     color_value = BLACK;
   }
-  else if(clear >= 700) {
+  else if(white >= 700) {
     color_string = "white";
     color_value = WHITE;
   }
   return(color_value);
 }
 
-void enable() {
+void Robus :: ColorSensor :: enable() {
     tcs.enable();
+    digitalWrite(LEDW, HIGH);
 }
 
-void disable() {
+void Robus :: ColorSensor :: disable() {
     tcs.disable();
+    digitalWrite(LEDW, LOW);
 }
 
 void ColorConverter :: RgbToHsv(uint8_t red, uint8_t green, uint8_t blue, double& hue, double& saturation, double& value) {

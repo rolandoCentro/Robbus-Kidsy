@@ -13,7 +13,7 @@
  *  @param  reg
  *  @param  value
  */
-void Adafruit_TCS34725::write8(uint8_t reg, uint32_t value) {
+void TCS34725::write8(uint8_t reg, uint32_t value) {
   _wire->beginTransmission(_i2caddr);
 #if ARDUINO >= 100
   _wire->write(TCS34725_COMMAND_BIT | reg);
@@ -30,7 +30,7 @@ void Adafruit_TCS34725::write8(uint8_t reg, uint32_t value) {
  *  @param  reg
  *  @return value
  */
-uint8_t Adafruit_TCS34725::read8(uint8_t reg) {
+uint8_t TCS34725::read8(uint8_t reg) {
   _wire->beginTransmission(_i2caddr);
 #if ARDUINO >= 100
   _wire->write(TCS34725_COMMAND_BIT | reg);
@@ -52,7 +52,7 @@ uint8_t Adafruit_TCS34725::read8(uint8_t reg) {
  *  @param  reg
  *  @return value
  */
-uint16_t Adafruit_TCS34725::read16(uint8_t reg) {
+uint16_t TCS34725::read16(uint8_t reg) {
   uint16_t x;
   uint16_t t;
 
@@ -80,7 +80,7 @@ uint16_t Adafruit_TCS34725::read16(uint8_t reg) {
 /*!
  *  @brief  Enables the device
  */
-void Adafruit_TCS34725::enable() {
+void TCS34725::enable() {
   write8(TCS34725_ENABLE, TCS34725_ENABLE_PON);
   delay(3);
   write8(TCS34725_ENABLE, TCS34725_ENABLE_PON | TCS34725_ENABLE_AEN);
@@ -115,7 +115,7 @@ void Adafruit_TCS34725::enable() {
 /*!
  *  @brief  Disables the device (putting it in lower power sleep mode)
  */
-void Adafruit_TCS34725::disable() {
+void TCS34725::disable() {
   /* Turn the device off to save power */
   uint8_t reg = 0;
   reg = read8(TCS34725_ENABLE);
@@ -129,7 +129,7 @@ void Adafruit_TCS34725::disable() {
  *  @param  gain
  *          Gain
  */
-Adafruit_TCS34725::Adafruit_TCS34725(tcs34725IntegrationTime_t it,
+TCS34725::TCS34725(tcs34725IntegrationTime_t it,
                                      tcs34725Gain_t gain) {
   _tcs34725Initialised = false;
   _tcs34725IntegrationTime = it;
@@ -138,37 +138,9 @@ Adafruit_TCS34725::Adafruit_TCS34725(tcs34725IntegrationTime_t it,
 
 /*!
  *  @brief  Initializes I2C and configures the sensor
- *  @param  addr
- *          i2c address
  *  @return True if initialization was successful, otherwise false.
  */
-boolean Adafruit_TCS34725::begin(uint8_t addr) {
-  _i2caddr = addr;
-  _wire = &Wire;
-
-  return init();
-}
-
-/*!
- *  @brief  Initializes I2C and configures the sensor
- *  @param  addr
- *          i2c address
- *  @param  *theWire
- *          The Wire object
- *  @return True if initialization was successful, otherwise false.
- */
-boolean Adafruit_TCS34725::begin(uint8_t addr, TwoWire *theWire) {
-  _i2caddr = addr;
-  _wire = theWire;
-
-  return init();
-}
-
-/*!
- *  @brief  Initializes I2C and configures the sensor
- *  @return True if initialization was successful, otherwise false.
- */
-boolean Adafruit_TCS34725::begin() {
+boolean TCS34725::begin() {
   _i2caddr = TCS34725_ADDRESS;
   _wire = &Wire;
 
@@ -179,7 +151,7 @@ boolean Adafruit_TCS34725::begin() {
  *  @brief  Part of begin
  *  @return True if initialization was successful, otherwise false.
  */
-boolean Adafruit_TCS34725::init() {
+boolean TCS34725::init() {
   _wire->begin(22,23);
 
   /* Make sure we're actually connected */
@@ -204,7 +176,7 @@ boolean Adafruit_TCS34725::init() {
  *  @param  it
  *          Integration Time
  */
-void Adafruit_TCS34725::setIntegrationTime(tcs34725IntegrationTime_t it) {
+void TCS34725::setIntegrationTime(tcs34725IntegrationTime_t it) {
   if (!_tcs34725Initialised)
     begin();
 
@@ -220,7 +192,7 @@ void Adafruit_TCS34725::setIntegrationTime(tcs34725IntegrationTime_t it) {
  *  @param  gain
  *          Gain (sensitivity to light)
  */
-void Adafruit_TCS34725::setGain(tcs34725Gain_t gain) {
+void TCS34725::setGain(tcs34725Gain_t gain) {
   if (!_tcs34725Initialised)
     begin();
 
@@ -242,7 +214,7 @@ void Adafruit_TCS34725::setGain(tcs34725Gain_t gain) {
  *  @param  *c
  *          Clear channel value
  */
-void Adafruit_TCS34725::getRawData(uint16_t *r, uint16_t *g, uint16_t *b,
+void TCS34725::getRawData(uint16_t *r, uint16_t *g, uint16_t *b,
                                    uint16_t *c) {
   if (!_tcs34725Initialised)
     begin();
