@@ -1,23 +1,18 @@
 /*
-    Video: https://www.youtube.com/watch?v=oCMOYS71NIU
-    Based on Neil Kolban example for IDF: https://github.com/nkolban/esp32-snippets/blob/master/cpp_utils/tests/BLE%20Tests/SampleNotify.cpp
-    Ported to Arduino ESP32 by Evandro Copercini
-
-   Create a BLE server that, once we receive a connection, will send periodic notifications.
-   The service advertises itself as: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
-   Has a characteristic of: 6E400002-B5A3-F393-E0A9-E50E24DCCA9E - used for receiving data with "WRITE" 
-   Has a characteristic of: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E - used to send data with  "NOTIFY"
-
-   The design of creating the BLE server is:
-   1. Create a BLE Server
-   2. Create a BLE Service
-   3. Create a BLE Characteristic on the Service
-   4. Create a BLE Descriptor on the characteristic
-   5. Start the service.
-   6. Start advertising.
-
-   In this example rxValue is the data received (only accessible inside that function).
-   And txValue is the data to be sent, in this example just a byte incremented every second. 
+*   Este ejemplo crea una conexion basica entre Robus Kidsy y un telefono, por bluetooth 4.2.
+*   El presente ejemplo funciona hasta el día 18/02/2020 con la aplicación blueFruit de Adafruit
+*   para telefonos Android. https://play.google.com/store/apps/details?id=com.adafruit.bluefruit.le.connect&hl=es
+*   
+*   Pasos para probar este ejemplo (modo Beta):
+*
+*   1.- Compilar con la placa Adafruit ESP32 Feather.
+*   2.- Serciorarse que el Robus Kidsy tenga el interruptor en posicion ON.
+*   3.- Instalar la aplicacion bluefruit (enlace arriba) en dispositivos Android (No probado en iOs).
+*   4.- Abrir la aplicación. Aparecera la pantalla Select Device, escoger Robus Kidsy.
+*   5.- El Led1 se encendera, indicando que la conexion fue exitosa. Si no se enciende o marca error
+*       volver a intentar.
+*   6.- Seleccionar Controller en la siguiente pantalla.
+*   7.- Dentro de Available Pins, seleccionar Control Pad.   
 */
 #include <BLEDevice.h>
 #include <BLEServer.h>
@@ -44,12 +39,12 @@ int txValue;
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
       deviceConnected = true;
-      Kidsy.Neopixel.heartBeat(RED);
+      Kidsy.Led1.on();
     };
 
     void onDisconnect(BLEServer* pServer) {
       deviceConnected = false;
-      Kidsy.Neopixel.heartBeat(BLUE);
+      Kidsy.Led1.off();
     }
 };
 
@@ -66,14 +61,14 @@ class MyCallbacks: public BLECharacteristicCallbacks {
       Serial.println();
       Serial.println("*********");
 
-      if (rxValue == "!B516") Kidsy.Move.frontStraight(150);
-      else if (rxValue == "!B507") Kidsy.Move.frontStraight(0);
-      if (rxValue == "!B615") Kidsy.Move.backStraight(150);
-      else if (rxValue == "!B606") Kidsy.Move.backStraight(0);
+      if (rxValue == "!B516") Kidsy.Move.straightForward(100);
+      else if (rxValue == "!B507") Kidsy.Move.stop();
+      if (rxValue == "!B615") Kidsy.Move.straightBackward(100);
+      else if (rxValue == "!B606") Kidsy.Move.stop();
       if (rxValue == "!B714") Kidsy.Move.pivotLeft(150);
-      else if (rxValue == "!B705") Kidsy.Move.pivotLeft(0);
+      else if (rxValue == "!B705") Kidsy.Move.stop();
       if (rxValue == "!B813") Kidsy.Move.pivotRight(150);
-      else if (rxValue == "!B804") Kidsy.Move.pivotRight(0);
+      else if (rxValue == "!B804") Kidsy.Move.stop();
 
       if (rxValue == "!B11:") {
         Kidsy.Buzzer.playTone(2000, 50);
@@ -95,11 +90,10 @@ class MyCallbacks: public BLECharacteristicCallbacks {
   }
 };
 
-
 void setup() {
   Serial.begin(115200);
   Kidsy.begin();
-  Kidsy.LedW.on();
+  Kidsy.ColorSensor.enable();
 
   // Create the BLE Device
   BLEDevice::init("Robus Kidsy");
