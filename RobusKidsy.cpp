@@ -9,12 +9,8 @@ TCS34725 tcs = TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
 
 void Robus :: begin() {
 
-  pinMode(BUTTON_A, INPUT_PULLUP);
-  pinMode(BUTTON_B, INPUT_PULLUP);
 
-  pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
-  pinMode(LEDW, OUTPUT);
   
   pinMode(DCM_LEFT_IN1, OUTPUT);
   pinMode(DCM_LEFT_IN2, OUTPUT);
