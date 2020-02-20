@@ -24,6 +24,8 @@ public:
   #define BACK  0
   #define ON    1
   #define OFF   0
+
+  #define LEDW  16
   
   class buttons {
   private:
@@ -48,14 +50,12 @@ public:
     #define LED2    21
     #define LED3    98
     #define LED4    99
-    #define LEDW    16
     uint8_t status;
     uint8_t pin;
     bool Led1 = LOW, :1;
     bool Led2 = LOW, :1;
     bool Led3 = LOW, :1;
     bool Led4 = LOW, :1;
-    bool LedW = LOW, :1;
     void set(bool);
     void on();
     void off();
@@ -92,11 +92,12 @@ public:
     void calibrate(bool state);
     // variables and function for digital reading
     uint8_t digital;
+    uint8_t read();
     uint8_t readDigital();
         
   } ArrowUp, ArrowDown, ArrowLeft, ArrowRight;
 
-  class classMove {
+  class movement {
   private:
     
   public:
@@ -116,10 +117,10 @@ public:
     uint8_t dcm_in;
     void MotorLeft(int16_t);
     void MotorRight(int16_t);
-    void straightForward(uint8_t);
-    void straightBackward(uint8_t);
-    void pivotLeft(uint8_t);
-    void pivotRight(uint8_t);
+    void forward(uint8_t);
+    void backward(uint8_t);
+    void turnLeft(uint8_t);
+    void turnRight(uint8_t);
     void closedLeft(uint8_t);
     void closedRight(uint8_t);
     void wideLeftFront(uint8_t, float);
@@ -165,7 +166,6 @@ public:
     #define ANY_BUTTON  5
     #define ANY_ARROW   6
 
-    void begin();
     void color(uint8_t, uint8_t, uint8_t);
     void color(uint8_t, uint8_t);
     void color(uint8_t);
@@ -180,13 +180,15 @@ public:
 
   class ColorSensor {
   private:
-    double hue, saturation, value;
+    double hue, saturation, sat_value;
     uint32_t sum;
     float r, g, b;
     uint16_t hue360;
   public:
-    uint8_t color_value;
-    String color_string;
+    bool LedW = LOW, :1;
+
+    uint8_t value;
+    String name;
     byte gammatable[256];
     uint16_t white, red, green, blue;
     uint8_t read();

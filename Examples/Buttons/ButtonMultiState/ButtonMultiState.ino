@@ -1,5 +1,8 @@
 // ------------------------------------------------ ROBUS KIDSY -----------------------------------------------
-// EJEMPLO DE USO DE LOS BOTONES DE USUARIO A Y B CON LOS 4 ESTADOS QUE PUEDEN REGRESAR
+//
+// Nivel de dificultad: FACIL
+//
+// EJEMPLO DE USO DE LOS BOTONES DE USUARIO A Y B CON PULSACION LARGA Y MANTENIDA
 // Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robus Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
@@ -9,11 +12,13 @@
 // - ButtonA
 // - ButtonB
 //
-// Los botones de usuario pueden devolver 4 valores:
-// PRESSED - El boton se presiono
-// RELEASED - El boton se libero
-// HOLD_PRESSED - El boton se mantiene presionado
-// HOLD_RELEASED - El boton se mantiene liberado
+// Con este ejemplo entenderas los diferentes usos que se le pueden dar a los botones de tu Robus Kidsy.
+// Los botones de usuario A y B pueden regresar 4 estados diferentes:
+//
+// 0 - RELEASED       - El boton paso de estar presionado a liberarse
+// 1 - PRESSED        - El boton paso de estar en en reposo a presionarse
+// 2 - HOLD_PRESSED   - Se mantiene presionado
+// 3 - HOLD_RELEASED  - Se mantiene sin preisonar
 //
 // Nota importante: El boton RESET sirve para reiniciar el programa de tu Robus Kidsy y no se puede programar
 // ------------------------------------------------------------------------------------------------------------
