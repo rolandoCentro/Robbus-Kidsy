@@ -81,21 +81,20 @@ public:
     bool old_state = LOW, :1;
         
   public:
-    #define UNTOUCHED         0
+    #define NOTOUCHED         0
     #define TOUCHED           1
     #define HOLD_TOUCHED      2
-    #define HOLD_UNTOUCHED    3
+    #define HOLD_NOTOUCHED    3
     uint8_t pin;
     // variables and function for analog reading
     uint8_t analog;
     uint8_t readAnalog();
     void calibrate(bool state);
     // variables and function for digital reading
-    uint8_t digital;
+    uint8_t status;
     uint8_t read();
-    uint8_t readDigital();
         
-  } ArrowUp, ArrowDown, ArrowLeft, ArrowRight;
+  } ArrowForward, ArrowBackward, ArrowLeft, ArrowRight;
 
   class movement {
   private:
@@ -151,20 +150,23 @@ public:
   class Neopixel {
   private:
   public:
-    #define BLACK       0 
-    #define RED         1
-    #define GREEN       2
-    #define BLUE        3
-    #define YELLOW      4
-    #define CYAN        6
-    #define MAGENTA     5
-    #define WHITE       7
+    #define BLACK         0 
+    #define RED           1
+    #define GREEN         2
+    #define BLUE          3
+    #define YELLOW        4
+    #define CYAN          6
+    #define MAGENTA       5
+    #define WHITE         7
 
-    #define RAINBOW     0
+    #define BLACK_UMBRAL  50
+    #define WHITE_UMBRAL  400
 
-    #define NONE        0
-    #define ANY_BUTTON  5
-    #define ANY_ARROW   6
+    #define RAINBOW       0
+
+    #define NONE          0
+    #define ANY_BUTTON    5
+    #define ANY_ARROW     6
 
     void color(uint8_t, uint8_t, uint8_t);
     void color(uint8_t, uint8_t);

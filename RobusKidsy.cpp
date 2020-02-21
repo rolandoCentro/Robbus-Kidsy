@@ -43,19 +43,20 @@ void Robus :: begin() {
   Led1.pin = LED1;
   Led2.pin = LED2;
 
-  ArrowUp.pin = AN_UP;
-  ArrowDown.pin = AN_DOWN;
+  ArrowForward.pin = AN_UP;
+  ArrowBackward.pin = AN_DOWN;
   ArrowLeft.pin = AN_LEFT;
   ArrowRight.pin = AN_RIGHT;
 
   for(int i=0; i<ARROW_BUFFER_SIZE; i++) {
-    ArrowUp.readAnalog();
-    ArrowDown.readAnalog();
+    ArrowForward.readAnalog();
+    ArrowBackward.readAnalog();
     ArrowLeft.readAnalog();
     ArrowRight.readAnalog();
   }
 
   dot.begin();
+  Neopixel.color(BLACK);
   tcs.begin();
 
   for (int i=0; i<256; i++) {
@@ -281,7 +282,7 @@ uint8_t Robus :: Arrows :: readAnalog() {
 }
 
 void Robus :: Arrows :: calibrate(bool state) {
-  if(state == UNTOUCHED) {
+  if(state == NOTOUCHED) {
     untouchCalibrate = readAnalog();
   }
   else touchCalibrate = readAnalog();
@@ -293,24 +294,12 @@ uint8_t Robus :: Arrows :: read() {
   readAnalog();
   if(analog < thresshold) new_state = HIGH;
   else new_state = LOW;
-  if(new_state == LOW && old_state == LOW) digital = HOLD_UNTOUCHED;
-  if(new_state == LOW && old_state == HIGH) digital = UNTOUCHED;
-  if(new_state == HIGH && old_state == LOW) digital = TOUCHED;
-  if(new_state == HIGH && old_state == HIGH) digital = HOLD_TOUCHED;
+  if(new_state == LOW && old_state == LOW) status = HOLD_NOTOUCHED;
+  if(new_state == LOW && old_state == HIGH) status = NOTOUCHED;
+  if(new_state == HIGH && old_state == LOW) status = TOUCHED;
+  if(new_state == HIGH && old_state == HIGH) status = HOLD_TOUCHED;
   old_state = new_state;
-  return(digital);
-}
-
-uint8_t Robus :: Arrows :: readDigital() {
-  readAnalog();
-  if(analog < thresshold) new_state = HIGH;
-  else new_state = LOW;
-  if(new_state == LOW && old_state == LOW) digital = HOLD_UNTOUCHED;
-  if(new_state == LOW && old_state == HIGH) digital = UNTOUCHED;
-  if(new_state == HIGH && old_state == LOW) digital = TOUCHED;
-  if(new_state == HIGH && old_state == HIGH) digital = HOLD_TOUCHED;
-  old_state = new_state;
-  return(digital);
+  return(status);
 }
 
 void Robus :: Buzzer :: playTone(int16_t frequency, uint16_t duration) {
@@ -372,6 +361,7 @@ void Robus :: Neopixel :: color(uint8_t color, uint8_t brightness) {
   if(brightness < 1) brightness = 1;
   else if(brightness > 255) brightness = 255;
   switch(color) {
+    case BLACK:   off();                                                    break;
     case RED:     dot.setPixelColor(0, brightness, 0, 0);                   break;
     case GREEN:   dot.setPixelColor(0, 0, brightness, 0);                   break;
     case BLUE:    dot.setPixelColor(0, 0, 0, brightness);                   break;
@@ -385,7 +375,7 @@ void Robus :: Neopixel :: color(uint8_t color, uint8_t brightness) {
 
 void Robus :: Neopixel :: color(uint8_t color) {
   switch(color) {
-    case OFF:     dot.setPixelColor(0, 0, 0, 0);       break;
+    case BLACK:   off();                               break;
     case RED:     dot.setPixelColor(0, 255, 0, 0);     break;
     case GREEN:   dot.setPixelColor(0, 0, 255, 0);     break;
     case BLUE:    dot.setPixelColor(0, 0, 0, 255);     break;
@@ -453,41 +443,41 @@ uint8_t Robus :: ColorSensor :: read() {
   ColorConverter::RgbToHsv(static_cast<uint8_t>(r), static_cast<uint8_t>(g), static_cast<uint8_t>(b), hue, saturation, sat_value);
   hue360 = hue * 360;
 
-  if (hue360 < 30 || hue360 >= 330 && white > 50 && white < 700)
+  if (hue360 < 30 || hue360 >= 330 && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "red";
     value = RED;
   }
-  else if (hue360 >= 31 && hue360 < 90 && white > 50 && white < 700)
+  else if (hue360 >= 31 && hue360 < 90 && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "yellow";
     value = YELLOW;
   }
-  else if (hue360 >= 91 && hue360 < 150 && white > 50 && white < 700)
+  else if (hue360 >= 91 && hue360 < 150 && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "green";
     value = GREEN;
   }
-  else if (hue360 >= 151 && hue360 < 210 && white > 50 && white < 700)
+  else if (hue360 >= 151 && hue360 < 210 && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "cyan";
     value = CYAN;
   }
-  else if (hue360 >= 210 && hue360 < 270 && white > 50 && white < 700)
+  else if (hue360 >= 210 && hue360 < 270 && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "blue";
     value = BLUE;
   }
-  else if (hue360 >= 270 && hue360 < 330 && white > 50 && white < 700)
+  else if (hue360 >= 270 && hue360 < 330 && white > BLACK_UMBRAL && white < WHITE_UMBRAL)
   {
     name = "magenta";
     value = MAGENTA;
   }
-  else if(white <= 50) {
+  else if(white <= BLACK_UMBRAL) {
     name = "black";
     value = BLACK;
   }
-  else if(white >= 700) {
+  else if(white >= WHITE_UMBRAL) {
     name = "white";
     value = WHITE;
   }
