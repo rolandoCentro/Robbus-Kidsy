@@ -2,19 +2,21 @@
 //
 // Nivel de dificultad: FACIL
 //
-// EJEMPLO DE USO DE LOS MOTORES IZQUIERDO Y DERECHO
+// EJEMPLO DE USO DE LOS MOTORES IZQUIERDO Y DERECHO CON VELOCIDAD VARIABLE
 // Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robus Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
-// Fecha: 20 de febrero de 2020
+// Fecha: 22 de febrero de 2020
 // ------------------------------------------------------------------------------------------------------------
 //
 // Robus Kidsy cuenta con 2 motorreductores:
 // - MotorLeft
 // - MotorRight
 // 
-// Con este ejemplo entenderas el funcionamiento de los motores que impulsan a tu robus Kidsy
-// Si quieres mover los motores por separado, basta con utilizar las funciones:
+// Con este ejemplo entenderas el funcionamiento de los motores que impulsan a tu robus Kidsy, al variar
+// si velocidad por medio de un ciclo for.
+// Si no sabes como funciona el ciclo for, te invitamos a probar el ejemplo cicloFor en sentencias condicionales
+// Para mover los motores por separado, basta con utilizar las funciones:
 //
 // Kidsy.Move.MotorLeft(speed);
 // Kidsy.Move.MotorRight(speed);
@@ -37,32 +39,33 @@
 Robus Kidsy;    // Declara una instancia tipo Robus, llamada Kidsy
 
 // Variables para la velocidad de los motores
-int speedLeft = 100;      // 100 hacia el FRENTE
-int speedRight = -100;    // 100 hacia ATRAS
+int speedLeft = 0;        // Motor izquierdo comienza detenido 
+int speedRight = 0;       // Motor derecho comienza detenido
+int time = 20;            // tiempo entre una velocidad y otra
 
 void setup() {
   Kidsy.begin();          // Inicializa el hardware del Robus Kidsy
 }
 
 void loop() {
-  Kidsy.ButtonA.read();   // captura estado nuevo del boton A
-  Kidsy.ButtonB.read();   // captura estado nuevo del boton B
-
-  // REVISION DEL BOTON A
-  // ----------------------
-  if(Kidsy.ButtonA.status == PRESSED) {
-    Kidsy.Move.MotorLeft(speedLeft);        // Si el boton se presiono, acciona motor izquierdo con varible
+  for(int i=0; i<=255; i++) {   // ciclo for de 0 a 255
+    Kidsy.Move.MotorLeft(i);    // mueve la llanta izquierda con el valor positivo (Adelante)
+    Kidsy.Move.MotorRight(-i);  // mueve la llanta derecha con el valor negativo (Atras)
+    delay(time);
   }
-  if(Kidsy.ButtonA.status == RELEASED) {
-    Kidsy.Move.MotorLeft(0);                // Si el boton se solto, detiene el motor izquierdo
+  for(int i=255; i>0; i--) {    // ciclo for de 255 a 0
+    Kidsy.Move.MotorLeft(i);
+    Kidsy.Move.MotorRight(-i);
+    delay(time);
   }
-  
-  // REVISION DEL BOTON B
-  // ----------------------
-  if(Kidsy.ButtonB.status == PRESSED) { 
-    Kidsy.Move.MotorRight(speedRight);      // Si el boton se presiono, acciona motor derecho con varible
+  for(int i=0; i<=255; i++) {   // ciclo for de 0 a 255
+    Kidsy.Move.MotorLeft(-i);   // invierte la direccion de las llantas mientras acelera
+    Kidsy.Move.MotorRight(i);
+    delay(time);
   }
-  if(Kidsy.ButtonB.status == RELEASED) { 
-    Kidsy.Move.MotorRight(0);               // Si el boton se solto, detiene el motor derecho
+  for(int i=255; i>0; i--) {    // ciclo for de 255 a 0
+    Kidsy.Move.MotorLeft(-i);   // invierte la direccion mientras desacelera
+    Kidsy.Move.MotorRight(i);
+    delay(time);
   }
 } 

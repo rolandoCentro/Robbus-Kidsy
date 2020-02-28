@@ -49,10 +49,10 @@ void Robus :: begin() {
   ArrowRight.pin = AN_RIGHT;
 
   for(int i=0; i<ARROW_BUFFER_SIZE; i++) {
-    ArrowForward.readAnalog();
-    ArrowBackward.readAnalog();
-    ArrowLeft.readAnalog();
-    ArrowRight.readAnalog();
+    ArrowForward.analogRead();
+    ArrowBackward.analogRead();
+    ArrowLeft.analogRead();
+    ArrowRight.analogRead();
   }
 
   dot.begin();
@@ -71,10 +71,10 @@ void Robus :: begin() {
 uint8_t Robus :: buttons :: read() {
   new_state = digitalRead(pin);
   if(new_state == HIGH && old_state == HIGH) status = HOLD_RELEASED;  // button remains released
-  if(new_state == HIGH && old_state == LOW) status = RELEASED;         // button is pressed once
-  if(new_state == LOW && old_state == HIGH) status = PRESSED;        // button is released once
+  if(new_state == HIGH && old_state == LOW) status = RELEASED;        // button is pressed once
+  if(new_state == LOW && old_state == HIGH) status = PRESSED;         // button is released once
   if(new_state == LOW && old_state == LOW) status = HOLD_PRESSED;     // button remains pressed
-  old_state = new_state;    // the last state gets old
+  old_state = new_state;                                              // the last state gets old
   if(status == RELEASED || status == PRESSED) {
     delay(50);
   }
@@ -259,7 +259,7 @@ void Robus :: movement :: stop() {
   ledcWrite(PWM_CHANNEL_LEFT_IN2, 255);
 }
 
-uint8_t Robus :: Arrows :: readAnalog() {
+uint8_t Robus :: Arrows :: analogRead() {
   // subtract the last reading:
   total = total - buffer[readIndex];
   // read from the sensor:
@@ -283,15 +283,15 @@ uint8_t Robus :: Arrows :: readAnalog() {
 
 void Robus :: Arrows :: calibrate(bool state) {
   if(state == NOTOUCHED) {
-    untouchCalibrate = readAnalog();
+    untouchCalibrate = analogRead();
   }
-  else touchCalibrate = readAnalog();
+  else touchCalibrate = analogRead();
 
   thresshold = (untouchCalibrate - touchCalibrate) / 2;
 }
 
 uint8_t Robus :: Arrows :: read() {
-  readAnalog();
+  analogRead();
   if(analog < thresshold) new_state = HIGH;
   else new_state = LOW;
   if(new_state == LOW && old_state == LOW) status = HOLD_NOTOUCHED;

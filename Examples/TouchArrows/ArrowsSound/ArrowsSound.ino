@@ -35,7 +35,7 @@
 Robus Kidsy;    // Declara una instancia tipo Robus, llamada Kidsy
 
 void setup() {
-  Serial.begin(115200);   // Inicializa comunicacion serial a 115200 baudios
+  Serial.begin(115200);
   Kidsy.begin();          // Inicializa el hardware del Robus Kidsy
 }
 
@@ -43,21 +43,25 @@ void loop() {
   if(Kidsy.ArrowForward.read() == TOUCHED) {   // tono de 300Hz durante 50ms
     Kidsy.Led1.on();
     Kidsy.Buzzer.playTone(300, 50);
+    Serial.println("TOUCHED");
     Kidsy.Led1.off();
   }
   if(Kidsy.ArrowBackward.read() == TOUCHED) {  // tono de 500Hz durante 50ms
     Kidsy.Led1.on();
     Kidsy.Buzzer.playTone(500, 50);
+    Serial.println("TOUCHED");
     Kidsy.Led1.off();
   }
   if(Kidsy.ArrowLeft.read() == TOUCHED) {      // tono de 700Hz durante 50ms
     Kidsy.Led2.on();
     Kidsy.Buzzer.playTone(700, 50);
+    Serial.println("TOUCHED");
     Kidsy.Led2.off();
   }
   if(Kidsy.ArrowRight.read() == TOUCHED) {     // tono de 900Hz durante 50ms
     Kidsy.Led2.on();
     Kidsy.Buzzer.playTone(900, 50);
+    Serial.println("TOUCHED");
     Kidsy.Led2.off();
   }
 

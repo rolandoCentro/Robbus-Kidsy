@@ -2,7 +2,7 @@
 //
 // Nivel de dificultad: FACIL
 //
-// EJEMPLO DE LECTURA DIGITAL DE LAS FLECHAS DE DIRECCION
+// EJEMPLO DE LECTURA ANALOGICA DE LAS FLECHAS DE DIRECCION
 // Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robus Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
@@ -15,14 +15,13 @@
 // - ArrowLeft
 // - ArrowRight
 //
-// Estas flechas son sensibles al tacto. Para leer su valor basta con usar la funciona read() la cual:
-// Leera un 1 o TOUCHED cuando se toca
-// Leera un 0 o NOTOUCHED cuando no se toca
+// Estas flechas son sensibles al tacto. Para leer su valor analogico se usa la funcion AnalogRead() la cual
+// leera un valor entre 0 y 255 (8 bits) del convertidor ADC
 //
-// Y posteriormente usar la variable status para saber su valor, por ejemplo:
+// Y posteriormente usar la variable analog para saber su valor, por ejemplo:
 //
-// Kidsy.ArrowForward.read();                   // Lee la flecha Adelante
-// if(Kidsy.ArrowForward.status == TOUCHED) {}  // Evalua si la flecha se presiono
+// Kidsy.ArrowForward.analogRead();             // Lee la flecha Adelante en formato analogico
+// --------------------------------------------------------------------------------------------------------------
 
 #include<RobusKidsy.h>
 
@@ -34,20 +33,17 @@ void setup() {
 }
 
 void loop() {
-  Kidsy.ArrowForward.read();     // Lee la flecha Adelante
-  Kidsy.ArrowBackward.read();    // Lee la flecha Atras
-  Kidsy.ArrowLeft.read();        // Lee la flecha Izquierda
-  Kidsy.ArrowRight.read();       // Lee la flecha Derecha
+  int analogForward = Kidsy.ArrowForward.analogRead();     // Lee la flecha Adelante
+  int analogBackward = Kidsy.ArrowBackward.analogRead();   // Lee la flecha Atras
+  int analogLeft = Kidsy.ArrowLeft.analogRead();           // Lee la flecha Izquierda
+  int analogRight = Kidsy.ArrowRight.analogRead();         // Lee la flecha Derecha
   
-  if(Kidsy.ArrowForward.status == TOUCHED) Serial.println("Adelante presionada");
-  else if(Kidsy.ArrowForward.status == NOTOUCHED) Serial.println("Adelante suelta");
-  
-  if(Kidsy.ArrowBackward.status == TOUCHED) Serial.println("Atras presionada");
-  else if(Kidsy.ArrowBackward.status == NOTOUCHED) Serial.println("Atras suelta");
-  
-  if(Kidsy.ArrowLeft.status == TOUCHED) Serial.println("Izquierda presionada");
-  else if(Kidsy.ArrowLeft.status == NOTOUCHED) Serial.println("Izquierda suelta");
-  
-  if(Kidsy.ArrowRight.status == TOUCHED) Serial.println("Derecha presionada");
-  else if(Kidsy.ArrowRight.status == NOTOUCHED) Serial.println("Derecha suelta");
+  Serial.print("Forward: ");
+  Serial.print(analogForward);
+  Serial.print(", Backward: ");
+  Serial.print(analogBackward);
+  Serial.print(", Left: ");
+  Serial.print(analogLeft);
+  Serial.print(", Right: ");
+  Serial.println(analogRight);
 }

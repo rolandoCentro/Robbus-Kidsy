@@ -32,10 +32,10 @@ public:
     bool new_state = HIGH;
     bool old_state = HIGH;
   public:
-    #define PRESSED           2
-    #define RELEASED          3
-    #define HOLD_RELEASED     0
-    #define HOLD_PRESSED      1
+    #define PRESSED           1
+    #define RELEASED          0
+    #define HOLD_RELEASED     2
+    #define HOLD_PRESSED      3
     #define BUTTON_A          25
     #define BUTTON_B          26
     uint8_t pin;      
@@ -88,7 +88,7 @@ public:
     uint8_t pin;
     // variables and function for analog reading
     uint8_t analog;
-    uint8_t readAnalog();
+    uint8_t analogRead();
     void calibrate(bool state);
     // variables and function for digital reading
     uint8_t status;
