@@ -26,6 +26,8 @@ public:
   #define OFF   0
 
   #define LEDW  16
+
+  void begin();
   
   class buttons {
   private:
@@ -75,7 +77,7 @@ public:
     uint8_t readIndex = 0;  // the index of the current reading
     uint16_t total = 0;     // the running total
     uint8_t average = 0;    // the average
-    uint8_t untouchCalibrate = 70;
+    uint8_t noTouchCalibrate = 70;
     uint8_t touchCalibrate = 3;
     bool new_state = LOW, :1;
     bool old_state = LOW, :1;
@@ -198,8 +200,6 @@ public:
     void disable();
     
   } ColorSensor;
-
-  void begin();
 };
 // End of Robus classes
 // ---------------------------------------------------------------------------------------------------------------

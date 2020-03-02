@@ -21,18 +21,18 @@
 //
 // La tabla de los colores, alias y nombres se detalla a continuacion:
 //
-//  ----------------------------
-// | NUMERO | ALIAS   | NOMBRE  |
-// | ---------------------------|
-// | 0     | BLACK   | Negro    |
-// | 1     | RED     | rojo     |
-// | 2     | GREEN   | verde    |
-// | 3     | BLUE    | azul     |
-// | 4     | YELLOW  | amarillo |
-// | 5     | CYAN    | cian     |
-// | 6     | MAGENTA | magenta  |    
-// | 7     | WHITE   | blanco   |
-//  ----------------------------
+//  -----------------------------
+// | NUMERO | ALIAS   | NOMBRE   |
+// | ----------------------------|
+// | 0      | BLACK   | Negro    |
+// | 1      | RED     | Rojo     |
+// | 2      | GREEN   | Verde    |
+// | 3      | BLUE    | Azul     |
+// | 4      | YELLOW  | Amarillo |
+// | 5      | CYAN    | Cian     |
+// | 6      | MAGENTA | Magenta  |    
+// | 7      | WHITE   | Blanco   |
+//  -----------------------------
 //
 // Este mismo esquema de colores lo maneja el Neopixel, por lo que son compatibles. Para mostrar el color que
 // esta viendo Robus Kidsy en el Neopixel basta con:

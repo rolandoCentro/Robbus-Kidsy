@@ -283,11 +283,11 @@ uint8_t Robus :: Arrows :: analogRead() {
 
 void Robus :: Arrows :: calibrate(bool state) {
   if(state == NOTOUCHED) {
-    untouchCalibrate = analogRead();
+    noTouchCalibrate = analogRead();
   }
   else touchCalibrate = analogRead();
 
-  thresshold = (untouchCalibrate - touchCalibrate) / 2;
+  thresshold = (noTouchCalibrate - touchCalibrate) / 2;
 }
 
 uint8_t Robus :: Arrows :: read() {

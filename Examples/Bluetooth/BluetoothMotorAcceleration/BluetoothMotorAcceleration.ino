@@ -221,11 +221,11 @@ void setup() {
 
 void loop() {
     Kidsy.ColorSensor.read();
-    Kidsy.Neopixel.color(Kidsy.ColorSensor.color_value);
-    Serial.println(Kidsy.ColorSensor.color_string);
+    Kidsy.Neopixel.color(Kidsy.ColorSensor.value);
+    Serial.println(Kidsy.ColorSensor.name);
     
     if (deviceConnected) {
-        pTxCharacteristic->setValue(&Kidsy.ColorSensor.color_value, 1);
+        pTxCharacteristic->setValue(&Kidsy.ColorSensor.value, 1);
         pTxCharacteristic->notify();
     delay(10); // bluetooth stack will go into congestion, if too many packets are sent
   }
