@@ -1,42 +1,46 @@
-// ------------------------------------------------ ROBUS KIDSY -----------------------------------------------
+// ------------------------------------------------ ROBBUS KIDSY -------------------------------------------------
 //
-// Nivel de dificultad: FACIL
+// Nivel de dificultad: INTERMEDIO
 //
 // EJEMPLO DE SONIDOS CON EL BUZZER POR MEDIO DE LAS FLECHAS DE DIRECCION
-// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robus Kidsy.
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware de Robbus Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
 // Fecha: 20 de febrero de 2020
 // ---------------------------------------------------------------------------------------------------------------
 //
-// Robus Kidsy cuenta con 1 buzzer:
+// Robbus Kidsy cuenta con 1 buzzer:
 // - Buzzer
 //
-// El buzzer no es otra cosa que una mini bocina, por lo que ¡Robus es capaz de hacer sonidos!
+// El buzzer no es otra cosa que una mini bocina, con la que Robbus es capaza de hacer sonidos
 // Utilizar el Buzzer es muy sencillo, basta con emplear la funcion Buzzer.playTone().
 //
 // Un tono es un sonido que se repite muchas veces en un segundo, y dependiendo de esa cantidad de veces, sera
-// como lo escuches, grave o agudo. Para que Robus Kidsy haga sonidos, basta con poner dentro de la funcion
-// playTone() la frecuencia (numero de veces por segundo) que tendra tu tono, y, si quieres que el sonido dure
-// cierto tiempo, la cantidad en mili segundos (recuerda que 1 segundo tiene 1000 milisegundos) y ¡listo!, por
-// ejemplo:
+// como lo escuches, grave o agudo. Para que Robbus Kidsy haga sonidos, basta con poner dentro de la funcion
+// playTone() la frecuencia (numero de veces por segundo o Hertz Hz) que tendra tu tono, y, si quieres que el 
+// sonido dure cierto tiempo, la cantidad en milisegundos (recuerda que 1 segundo tiene 1000 milisegundos) 
+// por ejemplo:
 //
-// Kisdy.Buzzer.playTone(500, 50);    // Robus reproduce un sonido grave durante 50 milisegundos
-// Kidsy.Buzzer.playTone(1000);       // Robus reproduce un sonido agudo de forma indefinida
+// Kisdy.Buzzer.playTone(100, 50);    // Robbus reproduce un sonido grave durante 50 milisegundos
+// Kidsy.Buzzer.playTone(1000);       // Robbus reproduce un sonido agudo de forma indefinida
+// 
+// El odio humano puede escuchar sonidos en el rango de los 20Hz a los 20000Hz
+// Los valores cercanos a 20 son sonidos graves, y los valores cercanos a 20000 son sonidos agudos, aunque
+// generalmente sonidos mayores a 15000Hz ya son imperceptibles para muchas presonas.
 //
-// Si usas la segunda forma, Robus no guardara silencio, a menos que uses la funcion Kidsy.Buzzer.noTone()
+// Si usas la segunda forma, Robbus no guardara silencio, a menos que uses la funcion Kidsy.Buzzer.noTone()
 //
-// Kidsy.Buzzer.playTone(1000);       // Robus reproduce un sonido agudo de forma indefinida
-// if(Kidsy.ButtonA.read() == PRESSED) Kidsy.Buzzer.noTone();   // Robus guarda silencio al predsionar el boton A
+// Kidsy.Buzzer.playTone(1000);       // Robbus reproduce un sonido agudo de forma indefinida
+// if(Kidsy.ButtonA.read() == PRESSED) Kidsy.Buzzer.noTone();   // Robbus guarda silencio al presionar el boton A
 // ---------------------------------------------------------------------------------------------------------------
 
-#include<RobusKidsy.h>
+#include<RobbusKidsy.h>
 
-Robus Kidsy;    // Declara una instancia tipo Robus, llamada Kidsy
+Robbus Kidsy;    // Crea tu Robus Kidsy
 
 void setup() {
   Serial.begin(115200);
-  Kidsy.begin();          // Inicializa el hardware del Robus Kidsy
+  Kidsy.begin();          // Inicializa el hardware del Robbus Kidsy
 }
 
 void loop() {

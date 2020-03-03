@@ -1,15 +1,15 @@
-// ------------------------------------------------ ROBUS KIDSY -----------------------------------------------
+// ------------------------------------------------ ROBBUS KIDSY ------------------------------------------------
 //
 // Nivel de dificultad: FACIL
 //
 // EJEMPLO DE LECTURA ANALOGICA DE LAS FLECHAS DE DIRECCION
-// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robus Kidsy.
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware de Robbus Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
 // Fecha: 20 de febrero de 2020
 // --------------------------------------------------------------------------------------------------------------
 //
-// Robus Kidsy cuenta con 4 flechas de direccion:
+// Robbus Kidsy cuenta con 4 flechas de direccion:
 // - ArrowForward
 // - ArrowBackward
 // - ArrowLeft
@@ -21,15 +21,16 @@
 // Y posteriormente usar la variable analog para saber su valor, por ejemplo:
 //
 // Kidsy.ArrowForward.analogRead();             // Lee la flecha Adelante en formato analogico
+// Serial.println(Kidsy.ArrowForward.analog);   // Imprime el valor obtenido
 // --------------------------------------------------------------------------------------------------------------
 
-#include<RobusKidsy.h>
+#include<RobbusKidsy.h>
 
-Robus Kidsy;    // Declara una instancia tipo Robus, llamada Kidsy
+Robbus Kidsy;             // Crea tu Robbus Kidsy
 
 void setup() {
   Serial.begin(115200);   // Inicializa comunicacion serial a 115200 baudios
-  Kidsy.begin();          // Inicializa el hardware del Robus Kidsy
+  Kidsy.begin();          // Inicializa el hardware del Robbus Kidsy
 }
 
 void loop() {

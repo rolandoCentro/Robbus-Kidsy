@@ -1,15 +1,15 @@
-// ------------------------------------------------ ROBUS KIDSY -----------------------------------------------
+// ------------------------------------------------ ROB.BIT KIDSY -----------------------------------------------
 //
 // Nivel de dificultad: FACIL
 //
 // EJEMPLO DE USO DEL NEOPIXEL EN CONJUNTO CON EL SENSOR DE COLOR
-// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robus Kidsy.
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Rob.bit Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
 // Fecha: 8 de febrero de 2020
 // --------------------------------------------------------------------------------------------------------------
 //
-// Robus Kidsy cuenta con 1 sensor de color y un Neopixel:
+// Rob.bit Kidsy cuenta con 1 sensor de color y un Neopixel:
 // - ColorSensor
 // - Neopixel
 //
@@ -35,7 +35,7 @@
 //  ----------------------------
 //
 // Este mismo esquema de colores lo maneja el Neopixel, por lo que son compatibles. Para mostrar el color que
-// esta viendo Robus Kidsy en el Neopixel basta con:
+// esta viendo Rob.bit Kidsy en el Neopixel basta con:
 //
 // 1. Leer el color con la funcion ColorSensor.read();
 // 2. Cargar ese color con la funcion:
@@ -45,16 +45,16 @@
 // una funcion del sensor.
 // --------------------------------------------------------------------------------------------------------------
 
-#include<RobusKidsy.h>
+#include<Rob_bit_Kidsy.h>
 
-Robus Kidsy;    // Declara una instancia tipo Robus, llamada de igual forma
+Rob_bit Kidsy;    // Declara una instancia tipo Rob.bit, llamada de igual forma
 
-bool buzzer_state = false;  // Activa o desactiva el buzzer
-int new_color, old_color;   // identifica si el color ha cambiado
+bool buzzer_state = false;    // Activa o desactiva el buzzer
+int new_color, old_color;     // identifica si el color ha cambiado
 
 void setup() {
   Serial.begin(115200);       // Inicializa comunicacion serial a 115200 baudios
-  Kidsy.begin();              // Inicializa el hardware del Robus Kidsy
+  Kidsy.begin();              // Inicializa el hardware del Rob.bit Kidsy
   Kidsy.ColorSensor.enable(); // Habilita el sensor de color y el LED blanco
 }
 
@@ -68,8 +68,8 @@ void loop() {
   // 5 - CYAN
   // 6 - MAGENTA
   // 7 - BLANCO
-  Kidsy.ColorSensor.read(); // Obtiene la medicion del sensor de color
-  Serial.println(Kidsy.ColorSensor.color_string); // Imprime el nombre del color mas cercano
+  Kidsy.ColorSensor.read();               // Obtiene la medicion del sensor de color
+  Serial.println(Kidsy.ColorSensor.name); // Imprime el nombre del color mas cercano
 
   // Imprime el valor individual de cada componente del color (RGB)
   /*Serial.print("Red: ");
@@ -79,23 +79,23 @@ void loop() {
   Serial.print(", Blue: ");
   Serial.println(Kidsy.ColorSensor.blue);*/
 
-  new_color = Kidsy.ColorSensor.color_value;    // el color leido es aproximado a los primarios o secundarios (RGBCMY)
+  new_color = Kidsy.ColorSensor.value;    // el color leido es aproximado a los primarios o secundarios (RGBCMY)
 
   if(Kidsy.ButtonA.read() == PRESSED) buzzer_state = !buzzer_state;   // El boton A activa o desactiva el Buzzer
   
-  if(new_color != old_color) {                              // si el color cambio ...
-    Kidsy.Neopixel.color(Kidsy.ColorSensor.color_value);    // ... muestra el color en el neopixel
-    if(buzzer_state == true) {                              // si el buzzer esta habilitado ...
-      switch(Kidsy.ColorSensor.color_value) {               // ... evalua que color se leyo
+  if(new_color != old_color) {                        // si el color cambio ...
+    Kidsy.Neopixel.color(Kidsy.ColorSensor.value);    // ... muestra el color en el neopixel
+    if(buzzer_state == true) {                        // si el buzzer esta habilitado ...
+      switch(Kidsy.ColorSensor.value) {               // ... evalua que color se leyo
         case RED:     
-          Kidsy.Buzzer.playTone(100); 
-          break;    // playTone(N); reproduce un sonido de frecuencia = N indefinidamente
+          Kidsy.Buzzer.playTone(100);   // reproduce un sonido a una determinada frecuencia, indefinidamente
+          break;    
         case GREEN:   
           Kidsy.Buzzer.playTone(200); 
-          break;    // playTone(N, time); repruduce durante cierto tiempo una frecuencia = N
+          break;    
         case BLUE:    
           Kidsy.Buzzer.playTone(300); 
-          break;    // ejemplo: Kidsy.Buzzer.playTone(300, 50); 300Hz, durante 50ms
+          break; 
         case YELLOW:  
           Kidsy.Buzzer.playTone(400); 
           break;
@@ -107,9 +107,7 @@ void loop() {
           break;
       }
     }
-    else Kidsy.Buzzer.noTone();   // noTone detiene la reproduccion indefinida de playTone(N);
+    else Kidsy.Buzzer.noTone();   // noTone detiene la reproduccion indefinida de playTone(Frequency);
   }  
-  old_color = new_color;   // el nuevo color leido se convierte en el viejo color en la siguiente vuelta al loop
+  old_color = new_color;          // el nuevo color leido se convierte en el viejo color en la siguiente vuelta al loop
 }
-// Fin del ejemplo uso del sensor de color con Neopixel y Buzzer
-// -------------------------------------------------------------------------------------------------------------------

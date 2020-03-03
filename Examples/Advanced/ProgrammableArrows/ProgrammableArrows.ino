@@ -1,16 +1,16 @@
-// ------------------------------------------------ ROBUS KIDSY -----------------------------------------------
+// ------------------------------------------------ ROB.BIT KIDSY -----------------------------------------------
 //
 // Nivel de dificultad: DIFICIL
 //
 // BUFFER DE MEMORIA PARA GUARDAR MOVIMIENTOS POR MEDIO DE LAS FLECHAS TOUCH 
-// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robus Kidsy.
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Rob.bit Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
 // Fecha: 01 de marzo de 2020
 // --------------------------------------------------------------------------------------------------------------
 //
 // En este ejemplo se desarrolla una funcionalidad compleja, la cual consiste en un buffer de memoria que puede
-// ir guardando las flechas que se tocan, para posteriormente usarse en el movimiento de tu Robus Kidsy.
+// ir guardando las flechas que se tocan, para posteriormente usarse en el movimiento de tu Rob.bit Kidsy.
 // El programa hace lo siguiente:
 //
 // 1. Revisa el boton A para activar o desactivar la grabacion de las flechas en memoria.
@@ -47,9 +47,9 @@
 // - Timer0
 // --------------------------------------------------------------------------------------------------------------
 
-#include<RobusKidsy.h>
+#include<Rob_bit_Kidsy.h>
 
-Robus Kidsy;              // Declara una instancia tipo Kidsy, llamada de igual forma
+Rob_bit Kidsy;              // Declara una instancia tipo Kidsy, llamada de igual forma
 
 hw_timer_t * timer = NULL;  // apuntador para el timer0
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;   // portMUX usado por el RTOS
@@ -96,10 +96,10 @@ void IRAM_ATTR onTimer() {
 
 void setup() {
   Serial.begin(115200);   // Inicia la comunicacion Serial
-  Kidsy.begin();          // Inicializa el hardware del Robus Kidsy
+  Kidsy.begin();          // Inicializa el hardware del Rob.bit Kidsy
   
   // Configuracion del timer:
-  // 0       - Inicializa el Timer0, Robus Kidsy dispone de 4 timers (0 al 3)
+  // 0       - Inicializa el Timer0, Rob.bit Kidsy dispone de 4 timers (0 al 3)
   // 80      - Valor del preescaler para 80MHz / 80 = 1000000 veces por segundo
   // true    - Cuenta ascendente, false: cuenta descendente
   timer = timerBegin(0, 80, true);

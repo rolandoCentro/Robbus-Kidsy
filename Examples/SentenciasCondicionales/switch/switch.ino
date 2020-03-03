@@ -1,26 +1,26 @@
-// ------------------------------------------------ ROBUS KIDSY -----------------------------------------------
+// ------------------------------------------------ ROBBUS KIDSY ----------------------------------------------
 //
-// Nivel de dificultad: FACIL
+// Nivel de dificultad: INTERMEDIO
 //
 // EJEMPLO DE USO DE LA SENTENCIA CONDICIONAL SWITCH, USADO EN PROGRAMACION EN LENGUAJE C
-// Este ejemplo es de uso libre y esta pensado para dar una introduccion al software del robot Robus Kidsy.
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al software de Robbus Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
 // Fecha: 19 de febrero de 2020
 // ------------------------------------------------------------------------------------------------------------
 //
-// Tu Robus Kidsy es capaz de tomar desiciones. Asi como tu eliges si quieres mirar a la izquierda, derecha,
-// arriba o abajo cuando alguien te llama, Robus es capaz de decidir si quiere ir a la izquierda, derecha, al
-// frente o hacia atras, dependiendo del color que vea.
-// La sentencia switch sirve justo para eso, DECIDIR. Si quieres que Robus tome esa desicion tan dificil, lo
+// Tu Robbus Kidsy es capaz de tomar desiciones. Asi como tu eliges si quieres mirar a la izquierda, derecha,
+// arriba o abajo cuando alguien te llama, Robbus es capaz de decidir si quiere ir a la izquierda, derecha, 
+// adelante o atras, dependiendo del color que vea.
+// La sentencia switch sirve justo para eso, DECIDIR. Si quieres que Robbus tome esa desicion tan dificil, lo
 // necesitaras. La sentencia Switch del lenguaje C, sirve para dirigir el programa por un lado u otro, 
-// dependiendo de una variable. El programa de tu Robus (y cualquier computadora o robot) siempre se ejecuta 
+// dependiendo de una variable. El programa de tu Robbus (y cualquier computadora o robot) siempre se ejecuta 
 // de arriba hacia abajo, pero el flujo se puede cambiar como si de abrir y cerrar llaves se tratara, por 
 // medio de un switch. 
 // 
-// Con este ejmplo aprenderas a utilizar una sentencia switch para hacer que robus decida una direccion
+// Con este ejemplo aprenderas a utilizar una sentencia switch para hacer que robus decida una direccion
 // posible entre cuatro opciones distintas. 
-// Robus puede ver 7 colores diferentes:
+// Robbus puede ver 7 colores diferentes:
 //
 // 0 - BLACK    (NEGRO)
 // 1 - RED      (ROJO)
@@ -36,13 +36,13 @@
 // con su valor numerico.
 //
 // Su forma es la siguiente:
-// switch() {   <- Cuerpo del switch
-//   case A:    <- Primera opcion
+// switch() {   <- Cuerpo del switch con llave de inicio
+//   case A:    <- Opcion A
 //     -----    <- Codigo a ejecutar
-//     break;   <- Interrupcion para ya no continuar si es la primera opcion.
-//   case B:    <- Segunda opcion
+//     break;   <- Si entro en la opcion A esto le impide seguir con las siguientes.
+//   case B:    <- Opcion B
 //     -----    <- Codigo a ejecutar
-//     break;   <- Interrupcion
+//     break;   <- Si entro en la opcion B esto le impide seguir con las siguientes.
 //
 //      .
 //      .
@@ -51,23 +51,23 @@
 //   case N:    <- Opcion N. No hay limite de opciones, mientras no se repitan
 //     break;
 
-//   default:   <- Opcion por defecto, por si no encontro ninguna
-//     break;
-// }            <- Final de la sentencia switch
+//   default:   <- Opcion por defecto, si no entro a ninguna opcion, puede ejecutar esta por defecto
+//     break;   <- Opcional, ya que esta deberia ser la ultima opcion.
+// }            <- Final de la sentencia switch con llave de cierre
 //
-// Lo mejor de todo es que la sentencia switch no es exclusiva de Robus, se ocupa en cualquier programa escrito
-// en lenguaje C, por que ¡podras programar futuros Robus y otros robots de la misma forma!
+// Lo mejor de todo es que la sentencia switch no es exclusiva de Robbus, se ocupa en cualquier programa 
+// escrito en lenguaje C, por lo que ¡podras programar futuros Robbus y otros robots de la misma forma!
 // ------------------------------------------------------------------------------------------------------------
 
-#include<RobusKidsy.h>
+#include<RobbusKidsy.h>
 
-Robus Kidsy;                    // Declara una instancia tipo Robus, llamada Kidsy
+Robbus Kidsy;                   // Crea tu Robbus Kidsy
 
-int kidsyColor;                 // Esta variable guardara el color que Robus vio
+int kidsyColor;                 // Esta variable guardara el color que Robbus vio
 
 void setup() {
   Serial.begin(115200);         // Inicializa la comunicacion serial por USB a 115200 baudios
-  Kidsy.begin();                // Inicializa el hardware del Robus Kidsy
+  Kidsy.begin();                // Inicializa el hardware del Robbus Kidsy
   Kidsy.ColorSensor.enable();   // Habilita el sensor de color y enciende su led blanco
 }
 
@@ -80,24 +80,24 @@ void loop() {
   switch(kidsyColor) {
     // estamos entre las llaves, el cuerpo del switch y aqui es donde se hara la evaluacion.
     
-    case RED:                    // "case" sirve para nombrar un posible caso, como es BLACK (0) termina con :
-      Kidsy.Move.forward(100);   // Robus se mueve al frente
-      break;                     // si este fue el caso, "break;" rompe la sentencia, y evita que entre a otro caso.
+    case RED:                    // "case" sirve para nombrar un posible caso, termina con :
+      Kidsy.Move.forward(100);   // Robbus se mueve al frente
+      break;                     // si este fue el caso, "break;" rompe el ciclo, y evita que entre a otro caso.
     
     case GREEN:                  // Evalua si el color es verde ...
-      Kidsy.Move.backward(100);  // ... Robus se mueve al frente
+      Kidsy.Move.backward(100);  // ... Robbus se mueve al frente
       break;                    
     
     case BLUE:                   // Evalua si el color es azul ...
-      Kidsy.Move.turnLeft(100);  // ... Robus se mueve a la izquierda
+      Kidsy.Move.turnLeft(100);  // ... Robbus se mueve a la izquierda
       break;
       
     case MAGENTA:                // el ultimo caso es MAGENTA, si llego aqui, significa que no era ninguno de los 3 anteriores...
-      Kidsy.Move.turnRight(100); // ... Robus se mueve a la derecha
+      Kidsy.Move.turnRight(100); // ... Robbus se mueve a la derecha
       break;
 
     default:                     // Si no fue ninguna opcion, siempre podemos dejar un caso auxiliar llamado default
-      Kidsy.Move.stop();         // y si llego hasta aqui, es por que no se presiona ninguna flecha y Robus se detiene.
+      Kidsy.Move.stop();         // y si llego hasta aqui, es por que no se presiona ninguna flecha y Robbus se detiene.
       break;
   }                              // Este es el termino del ciclo, lo que suceda a continuacion ya no formara parte de el.
 }

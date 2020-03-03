@@ -23,9 +23,9 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
-#include <RobusKidsy.h>
+#include <Rob_bit_Kidsy.h>
 
-Robus Kidsy;
+Rob_bit Kidsy;
 
 #define MAX_SPEED     100     // Velocidad maxima de los motores
 #define TIMER_TIME    50000   // Tiempo del Timer0 en microSegundos
@@ -166,10 +166,10 @@ void setup() {
 
   // A continucacion configuramos el timer:
   
-  // 0       - Inicializa el Timer0, Robus Kidsy dispone de 4 timers (0 al 3)
+  // 0       - Inicializa el Timer0, Rob.bit Kidsy dispone de 4 timers (0 al 3)
   // 80      - Valor del preescaler para 80MHz / 80 = 1000000 veces por segundo
   // true    - Cuenta ascendente, false: cuenta descendente
-  timer = timerBegin(3, 80, true);
+  timer = timerBegin(0, 80, true);
   
   // timer    - Pasamos la variable timer creada
   // &onTimer - funcion onTimer
@@ -187,7 +187,7 @@ void setup() {
   // ---------------------------------------------------------------------------------------------------------------------------
 
   // Create the BLE Device
-  BLEDevice::init("Robus Kidsy");
+  BLEDevice::init("Rob.bit Kidsy");
 
   // Create the BLE Server
   pServer = BLEDevice::createServer();

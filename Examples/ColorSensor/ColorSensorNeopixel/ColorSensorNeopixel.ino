@@ -1,15 +1,15 @@
-// ------------------------------------------------ ROBUS KIDSY -----------------------------------------------
+// ------------------------------------------------ ROBBUS KIDSY ------------------------------------------------
 //
 // Nivel de dificultad: FACIL
 //
 // EJEMPLO DE USO DEL NEOPIXEL EN CONJUNTO CON EL SENSOR DE COLOR
-// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robus Kidsy.
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware de Robbus Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
 // Fecha: 8 de febrero de 2020
 // --------------------------------------------------------------------------------------------------------------
 //
-// Robus Kidsy cuenta con 1 sensor de color y un Neopixel:
+// Robbus Kidsy cuenta con 1 sensor de color y un Neopixel:
 // - ColorSensor
 // - Neopixel
 //
@@ -35,7 +35,7 @@
 //  -----------------------------
 //
 // Este mismo esquema de colores lo maneja el Neopixel, por lo que son compatibles. Para mostrar el color que
-// esta viendo Robus Kidsy en el Neopixel basta con:
+// esta viendo Robbus Kidsy en el Neopixel basta con:
 //
 // 1. Leer el color con la funcion ColorSensor.read();
 // 2. Cargar ese color con la funcion Neopixel.color(ColorSensor.value);
@@ -44,13 +44,13 @@
 // una funcion del sensor.
 // --------------------------------------------------------------------------------------------------------------
 
-#include<RobusKidsy.h>
+#include<RobbusKidsy.h>
 
-Robus Kidsy;    // Declara una instancia tipo Robus, llamada de igual forma
+Robbus Kidsy;    // Declara una instancia tipo Robbus, llamada de igual forma
 
 void setup() {
   Serial.begin(115200);         // Inicializa comunicacion serial a 115200 baudios
-  Kidsy.begin();                // Inicializa el hardware del Robus Kidsy
+  Kidsy.begin();                // Inicializa el hardware del Robbus Kidsy
   Kidsy.ColorSensor.enable();   // Habilita el sensor de color y el LED blanco
 }
 

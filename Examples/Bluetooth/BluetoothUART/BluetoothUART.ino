@@ -1,14 +1,14 @@
 /*
-*   Este ejemplo crea una conexion basica entre Robus Kidsy y un telefono, por bluetooth 4.2.
-*   El presente ejemplo funciona hasta el día 18/02/2020 con la aplicación blueFruit de Adafruit
+*   Este ejemplo crea una conexion basica entre Rob.bit Kidsy y un telefono, por bluetooth 4.2.
+*   El presente ejemplo funciona hasta el día 02/03/2020 con la aplicación blueFruit de Adafruit
 *   para telefonos Android. https://play.google.com/store/apps/details?id=com.adafruit.bluefruit.le.connect&hl=es
 *   
 *   Pasos para probar este ejemplo (modo Beta):
 *
-*   1.- Compilar con la placa Adafruit ESP32 Feather.
-*   2.- Serciorarse que el Robus Kidsy tenga el interruptor en posicion ON.
+*   1.- Compilar y subir con la placa Adafruit ESP32 Feather.
+*   2.- Serciorarse que tu Rob.bit Kidsy tenga el interruptor en posicion ON.
 *   3.- Instalar la aplicacion bluefruit (enlace arriba) en dispositivos Android (No probado en iOs).
-*   4.- Abrir la aplicación. Aparecera la pantalla Select Device, escoger Robus Kidsy.
+*   4.- Abrir la aplicación. Aparecera la pantalla Select Device, escoger Rob.bit Kidsy.
 *   5.- El Led1 se encendera, indicando que la conexion fue exitosa. Si no se enciende o marca error
 *       volver a intentar.
 *   6.- Seleccionar Controller en la siguiente pantalla.
@@ -18,9 +18,9 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
-#include <RobusKidsy.h>
+#include <Rob_bit_Kidsy.h>
 
-Robus Kidsy;
+Rob_bit Kidsy;
 
 BLEServer *pServer = NULL;
 BLECharacteristic * pTxCharacteristic;
@@ -61,13 +61,13 @@ class MyCallbacks: public BLECharacteristicCallbacks {
       Serial.println();
       Serial.println("*********");
 
-      if (rxValue == "!B516") Kidsy.Move.straightForward(100);
+      if (rxValue == "!B516") Kidsy.Move.forward(100);
       else if (rxValue == "!B507") Kidsy.Move.stop();
-      if (rxValue == "!B615") Kidsy.Move.straightBackward(100);
+      if (rxValue == "!B615") Kidsy.Move.backward(100);
       else if (rxValue == "!B606") Kidsy.Move.stop();
-      if (rxValue == "!B714") Kidsy.Move.pivotLeft(150);
+      if (rxValue == "!B714") Kidsy.Move.turnLeft(150);
       else if (rxValue == "!B705") Kidsy.Move.stop();
-      if (rxValue == "!B813") Kidsy.Move.pivotRight(150);
+      if (rxValue == "!B813") Kidsy.Move.turnRight(150);
       else if (rxValue == "!B804") Kidsy.Move.stop();
 
       if (rxValue == "!B11:") {
@@ -96,7 +96,7 @@ void setup() {
   Kidsy.ColorSensor.enable();
 
   // Create the BLE Device
-  BLEDevice::init("Robus Kidsy");
+  BLEDevice::init("Rob.bit Kidsy");
 
   // Create the BLE Server
   pServer = BLEDevice::createServer();
@@ -130,11 +130,11 @@ void setup() {
 
 void loop() {
     Kidsy.ColorSensor.read();
-    Kidsy.Neopixel.color(Kidsy.ColorSensor.color_value);
-    Serial.println(Kidsy.ColorSensor.color_string);
+    Kidsy.Neopixel.color(Kidsy.ColorSensor.value);
+    Serial.println(Kidsy.ColorSensor.name);
     
     if (deviceConnected) {
-        pTxCharacteristic->setValue(&Kidsy.ColorSensor.color_value, 1);
+        pTxCharacteristic->setValue(&Kidsy.ColorSensor.value, 1);
         pTxCharacteristic->notify();
     delay(10); // bluetooth stack will go into congestion, if too many packets are sent
   }

@@ -1,18 +1,18 @@
-// ------------------------------------------------ ROBUS KIDSY -----------------------------------------------
+// ------------------------------------------------ ROBBUS KIDSY ----------------------------------------------
 //
 // Nivel de dificultad: FACIL
 //
 // EJEMPLO DE USO DE LOS BOTONES DE USUARIO A Y B CON PULSACION LARGA Y MANTENIDA
-// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robus Kidsy.
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware de Robbus Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
 // Fecha: 17 de febrero de 2020
 // ------------------------------------------------------------------------------------------------------------
-// Robus Kidsy cuenta con 2 Botones de usuario:
+// Robbus Kidsy cuenta con 2 Botones de usuario:
 // - ButtonA
 // - ButtonB
 //
-// Con este ejemplo entenderas los diferentes usos que se le pueden dar a los botones de tu Robus Kidsy.
+// Con este ejemplo entenderas los diferentes usos que se le pueden dar a los botones de tu Robot.
 // Los botones de usuario A y B pueden regresar 4 estados diferentes:
 //
 // 0 - RELEASED       - El boton paso de estar presionado a liberarse
@@ -20,19 +20,19 @@
 // 2 - HOLD_PRESSED   - Se mantiene presionado
 // 3 - HOLD_RELEASED  - Se mantiene sin preisonar
 //
-// Nota importante: El boton RESET sirve para reiniciar el programa de tu Robus Kidsy y no se puede programar
+// Nota importante: El boton RESET sirve para reiniciar el programa de tu robot y no se puede programar
 // ------------------------------------------------------------------------------------------------------------
 
-#include<RobusKidsy.h>
+#include<RobbusKidsy.h>
 
-Robus Kidsy;    // Declara una instancia tipo Kidsy, llamada de igual forma
+Robbus Kidsy;             // Crea tu Robbus Kidsy
 
 int times_A;
-int times_B;    // Cuenta las pulsaciones de los botones
+int times_B;              // Cuenta las pulsaciones de los botones
 
 void setup() {
   Serial.begin(115200);   // Inicializa comunicacion serial a 115200 baudios
-  Kidsy.begin();          // Inicializa el hardware del Robus Kidsy
+  Kidsy.begin();          // Inicializa el hardware del Robbus Kidsy
 }
 
 void loop() {

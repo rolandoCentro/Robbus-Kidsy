@@ -1,15 +1,15 @@
-// ------------------------------------------------ ROBUS KIDSY -----------------------------------------------
+// ------------------------------------------------ ROBBUS KIDSY ----------------------------------------------
 //
 // Nivel de dificultad: FACIL
 //
 // EJEMPLO DE USO DE LA SENTENCIA CONDICIONAL IF, USADO EN PROGRAMACION EN LENGUAJE C
-// Este ejemplo es de uso libre y esta pensado para dar una introduccion al software del robot Robus Kidsy.
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al software de Robbus Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
 // Fecha: 27 de febrero de 2020
 // ------------------------------------------------------------------------------------------------------------
 //
-// Decisiones... de eso se trata la vida. Los robots tambien las pueden hacer y Robus no es la excepcion.
+// Decisiones... de eso se trata la vida. Los robots tambien las pueden hacer y Robbus no es la excepcion.
 // Una decision puede cambiar, detener o ralentizar el flujo de un programa. Imagina que vas en un autobus
 // y a lo lejos vez como el semaforo cambia de verde a rojo y el autobus comienza a frenar hasta detenerse,
 // entonces piensas... "cambia a verde para que podamos continuar", pues esta decision la puede tomar un robot
@@ -48,16 +48,16 @@
 // "Si el boton esta presionado, entonces enciende el LED, de lo contrario, apaga el LED"
 //
 // Y con estas dos palabra ya podemos tomar una decision en funcion de una entrada. Veamos como se
-// puede sacar provecho de esta condicional en tu Robus Kidsy para encender o apagar los LEDs
+// puede sacar provecho de esta condicional en tu Robbus Kidsy para encender o apagar los LEDs
 // dependiendo de si los botones se presionan o no.
 // ------------------------------------------------------------------------------------------------------------
 
-#include<RobusKidsy.h>
+#include<RobbusKidsy.h>
 
-Robus Kidsy;                    // Declara una instancia tipo Robus, llamada Kidsy
+Robbus Kidsy;      // Crea tu Robus Kidsy
 
 void setup() {
-  Kidsy.begin();                // Inicializa el hardware del Robus Kidsy
+  Kidsy.begin();   // Inicializa el hardware del Robbus Kidsy
 }
 
 void loop() {

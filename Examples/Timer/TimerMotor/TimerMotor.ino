@@ -1,8 +1,25 @@
-// Ejemplo de uso de motores Izquierdo y Derecho
+// ------------------------------------------------ ROBBUS KIDSY ----------------------------------------------
+//
+// Nivel de dificultad: AVANZADO
+//
+// EJEMPLO DE USO DE LOS TIMERS POR HARDWARE
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware de Robbus Kidsy.
+// Autor: Fabian Alfonso Flores
+// Empresa: Proyectil Mx
+// Fecha: 03 de marzo de 2020
+// ------------------------------------------------------------------------------------------------------------
+// Robbus Kidsy cuenta con 4 timers:
+// Timer0
+// Timer1
+// Timer2
+// Timer3
+//
+// Para mas informacion sobre el Hardware, puedes consultar la hoja de datos WROOM32.
+// ------------------------------------------------------------------------------------------------------------
 
-#include<RobusKidsy.h>
+#include<RobbusKidsy.h>
 
-Robus Kidsy;    // Declara una instancia tipo Robus, llamada Kidsy
+Robbus Kidsy;    // Declara una instancia tipo Robbus, llamada Kidsy
 
 #define MAX_SPEED     100     // Velocidad maxima de los motores
 #define TIMER_TIME    50000   // Tiempo del Timer0 en microSegundos
@@ -45,11 +62,11 @@ void IRAM_ATTR onTimer() {
 
 void setup() {
   Serial.begin(115200);   // Inicializa la comunicacion serial por USB a 115200 baudios
-  Kidsy.begin();          // Inicializa el hardware del Robus Kidsy
+  Kidsy.begin();          // Inicializa el hardware del Robbus Kidsy
 
   // A continucacion configuramos el timer:
   
-  // 0       - Inicializa el Timer0, Robus Kidsy dispone de 4 timers (0 al 3)
+  // 0       - Inicializa el Timer0, Robbus Kidsy dispone de 4 timers (0 al 3)
   // 80      - Valor del preescaler para 80MHz / 80 = 1000000 veces por segundo
   // true    - Cuenta ascendente, false: cuenta descendente
   timer = timerBegin(0, 80, true);
@@ -72,33 +89,33 @@ void loop() {
   Kidsy.ButtonA.read();   // captura estado nuevo del boton A
   Kidsy.ButtonB.read();   // captura estado nuevo del boton B
 
-  Kidsy.ArrowUp.readDigital();  // Captura el valor digital de la flecha arriba
-  Kidsy.ArrowDown.readDigital();  // Captura el valor digital de la flecha abajo
-  Kidsy.ArrowLeft.readDigital();  // Captura el valor digital de la flecha izquierda
-  Kidsy.ArrowRight.readDigital();  // Captura el valor digital de la flecha derecha
+  Kidsy.ArrowForward.read();  // Captura el valor digital de la flecha arriba
+  Kidsy.ArrowBackward.read();  // Captura el valor digital de la flecha abajo
+  Kidsy.ArrowLeft.read();  // Captura el valor digital de la flecha izquierda
+  Kidsy.ArrowRight.read();  // Captura el valor digital de la flecha derecha
 
-  if(Kidsy.ArrowUp.digital == TOUCHED) {
+  if(Kidsy.ArrowForward.status == TOUCHED) {
     setSpeedLeft = MAX_SPEED;
     setSpeedRight = MAX_SPEED;
     Kidsy.Neopixel.color(RED);
     Kidsy.Buzzer.playTone(400,50);
   }
 
-  if(Kidsy.ArrowDown.digital == TOUCHED) {
+  if(Kidsy.ArrowBackward.status == TOUCHED) {
     setSpeedLeft = -MAX_SPEED;
     setSpeedRight = -MAX_SPEED;
     Kidsy.Neopixel.color(GREEN);
     Kidsy.Buzzer.playTone(500,50);
   }
 
-  if(Kidsy.ArrowLeft.digital == TOUCHED) {
+  if(Kidsy.ArrowLeft.status == TOUCHED) {
     setSpeedLeft = -MAX_SPEED;
     setSpeedRight = MAX_SPEED;
     Kidsy.Neopixel.color(BLUE);
     Kidsy.Buzzer.playTone(600,50);
   }
 
-  if(Kidsy.ArrowRight.digital == TOUCHED) {
+  if(Kidsy.ArrowRight.status == TOUCHED) {
     setSpeedLeft = MAX_SPEED;
     setSpeedRight = -MAX_SPEED;
     Kidsy.Neopixel.color(MAGENTA);

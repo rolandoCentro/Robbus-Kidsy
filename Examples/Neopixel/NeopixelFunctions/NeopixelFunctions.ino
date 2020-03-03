@@ -1,22 +1,22 @@
-// ------------------------------------------------ ROBUS KIDSY -----------------------------------------------
+// ------------------------------------------------ ROBBUS KIDSY ------------------------------------------------
 //
 // Nivel de dificultad: FACIL
 //
 // EJEMPLO DE USO DEL NEOPIXEL
-// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware del robot Robus Kidsy.
+// Este ejemplo es de uso libre y esta pensado para dar una introduccion al hardware de Robbus Kidsy.
 // Autor: Fabian Alfonso Flores
 // Empresa: Proyectil Mx
 // Fecha: 17 de febrero de 2020
 // --------------------------------------------------------------------------------------------------------------
 //
-// Robus Kidsy cuenta con un LED RGB (Red, Green, Blue o rojo, verde, azul), capaz de mostrar una gama amplia
+// Robbus Kidsy cuenta con un LED RGB (Red, Green, Blue o rojo, verde, azul), capaz de mostrar una gama amplia
 // de colores, dependiendo de los valores de cada uno de sus componentes.
 // Un LED RGB tiene en su interior 3 LEDs diferentes de cada color primario, y al prenderlos con diferente
 // intensidad, se logra el cambio de color.
 // Como los Neopixels son de 8 bits, quiere decir que cada color puede tener un valor entre 0 (apagado) y
 // 255 (encendido al maximo), por lo que 256*256*256 = ¡16,777,216 colores diferentes!
 //
-// Para tener acceso al Neopixel, usaremos la puncion del mismo nombre, la cual tiene a su vez las siguientes
+// El Neopixel tiene las siguientes funciones
 // funciones basicas:
 //   color(red,green,blue);               // componentes rojo, azul y verde, con valores de 0 a 255
 //   color(color, brightness);            // color con un brillo entre 1 y 255
@@ -40,12 +40,12 @@
 // --------------------------------------------------------------------------------------------------------------
 
 
-#include<RobusKidsy.h>
+#include<RobbusKidsy.h>
 
-Robus Kidsy;              // Declara una instancia tipo Kidsy, llamada de igual forma
+Robbus Kidsy;      // Crea tu Robbus Kidsy
 
 void setup() {
-  Kidsy.begin();          // Inicializa el hardware del Robus Kidsy
+  Kidsy.begin();   // Inicializa el hardware de Robbus Kidsy
 }
 
 void loop() {

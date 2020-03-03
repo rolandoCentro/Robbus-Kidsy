@@ -1,5 +1,5 @@
-#ifndef ROBUSKIDSY_H
-#define _ROBUSKIDSY_H_
+#ifndef _ROBBUSKIDSY_H
+#define _ROBBUSKIDSY_H_
 
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
@@ -7,8 +7,8 @@
 #include "TCS34725.h"
 
 // -------------------------------------------------------------------------------------------------------------
-// Robus Classes
-class Robus {
+// Robbus Classes
+class Robbus {
 private:
   // Global private constants
   #define PWM_MOTOR_FREQ        30000   // this variable is used to define the time period 
@@ -201,7 +201,7 @@ public:
     
   } ColorSensor;
 };
-// End of Robus classes
+// End of Robbus classes
 // ---------------------------------------------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------------------------------------------
