@@ -146,14 +146,13 @@ void Robbus :: movement :: forward(uint8_t vel) {
 
 void Robbus :: movement :: backward(uint8_t vel) {
   if(vel > 255) vel = 255;
-  else if(vel < -255) vel = -255;
-  
-  if(speed < 0) speed = vel;
-  else speed = -vel;
+  else if(vel < 0) vel = 0;
+  speed = vel;
+
   ledcWrite(PWM_CHANNEL_LEFT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 + speed);
+  ledcWrite(PWM_CHANNEL_LEFT_IN2, 255 - speed);
   ledcWrite(PWM_CHANNEL_RIGHT_IN1, 255);
-  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 + speed);
+  ledcWrite(PWM_CHANNEL_RIGHT_IN2, 255 - speed);
 }
 
 void Robbus :: movement :: turnLeft(uint8_t speed) {
